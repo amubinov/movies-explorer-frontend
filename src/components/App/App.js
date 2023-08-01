@@ -34,12 +34,12 @@ function App() {
     <div className="app">
       <Routes>
         <Route path="/" element={<Main isLogged={!isLogged} />} />
-        <Route path="/movies" element={<main><Movies isLogged={isLogged} /></main>} />
-        <Route path="/saved-movies" element={<main><SavedMovies isLoggen={isLogged} /></main>} />
-        <Route path="/profile" element={<main><Profile /></main>} />
+        <Route path="/movies" element={<Movies isLogged={isLogged} />} />
+        <Route path="/saved-movies" element={<SavedMovies isLoggen={isLogged} />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="/signin" element={isLogged ? <Navigate to="/" /> : <main><Login onLogin={handleLogin} /></main>} />
         <Route path="/signup" element={isLogged ? <Navigate to="/" /> : <main><Register onRegister={handleRegister} /></main>} />
-        <Route path="*" element={<main><PageNotFound /></main>} />
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
     </div>
   );

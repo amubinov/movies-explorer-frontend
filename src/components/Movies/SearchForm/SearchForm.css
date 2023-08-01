@@ -30,20 +30,20 @@
   height: 100%;
   flex-grow: 1;
   border: none;
+  outline: none;
   background-color: transparent;
-  outline: none;
-  transition: opacity 0.2s linear;
-}
-
-.search__input:focus {
-  outline: none;
-  opacity: 0.7;
 }
 
 .search__input::placeholder {
   font-size: 28px;
   line-height: normal;
   font-weight: 500;
+}
+
+.search__input:focus {
+  outline: none;
+  border-bottom: 1px solid #3456f3;
+  padding-bottom: 12px;
 }
 
 .search__button {

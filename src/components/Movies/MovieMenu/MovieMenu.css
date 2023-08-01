@@ -11,7 +11,7 @@
   margin-left: auto;
   padding: 0;
   display: none;
-  width: 40px;
+  width: 27px;
   height: 43px;
   outline: none;
   border: none;
@@ -186,6 +186,10 @@
 }
 
 @media screen and (max-width: 600px) {
+  .movie-menu__burger {
+    width: 22px;
+  }
+
   .movie-menu__list {
     margin: 105px auto 0;
     gap: 18px;

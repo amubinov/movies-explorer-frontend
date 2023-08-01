@@ -6,7 +6,7 @@ import MovieMenu from '../Movies/MovieMenu/MovieMenu';
 
 function Header({ isLogged }) {
   return (
-    <header className={`header ${!isLogged ? 'header__dark' : 'header__light'}`}>
+    <header className={`header ${!isLogged ? 'header_dark' : 'header_light'}`}>
 
       <Link to='/' className='header__logo' />
       {!isLogged && <Navigation />}

@@ -6,11 +6,11 @@
   justify-content: space-between;
 }
 
-.header__dark {
+.header_dark {
   background-color: #073042;
 }
 
-.header__light {
+.header_light {
   background-color: #fff;
 }
 

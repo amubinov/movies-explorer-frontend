@@ -13,16 +13,19 @@ function Movies(isLogged) {
 
   return (
     <>
-      <Header isLogged={isLogged} />
-      <SearchForm />
-      {isPreloader ? <Preloader /> :
-        <>
+      <header>
+        <Header isLogged={isLogged} />
+      </header>
+      <main>
+        <SearchForm />
+        {isPreloader ? <Preloader /> :
           <MoviesCardList movies={movies} showMore={showMore}
             setShowMore={setShowMore} />
-        </>
-      }
-      <Footer />
-
+        }
+      </main>
+      <footer>
+        <Footer />
+      </footer>
     </>
   );
 };

@@ -13,19 +13,25 @@ function SavedMovies(isLogged) {
 
   return (
     <>
-      <Header isLogged={isLogged} />
-      <SearchForm />
-      {isPreloader ? (
-        <Preloader />
-      ) : (
-        <>
-          <MoviesCardList
-            movies={savedMovies}
-            showMore={showMore}
-          />
-        </>
-      )}
-      <Footer />
+      <header>
+        <Header isLogged={isLogged} />
+      </header>
+      <main>
+        <SearchForm />
+        {isPreloader ? (
+          <Preloader />
+        ) : (
+          <>
+            <MoviesCardList
+              movies={savedMovies}
+              showMore={showMore}
+            />
+          </>
+        )}
+      </main>
+      <footer>
+        <Footer />
+      </footer>
     </>
   );
 }
