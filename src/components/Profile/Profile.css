@@ -107,6 +107,10 @@
   color: #3456f3;
 }
 
+.profile__button_disabled {
+  cursor: not-allowed;
+}
+
 .profile__button_signout {
   color: #ff3055;
   font-weight: 500;

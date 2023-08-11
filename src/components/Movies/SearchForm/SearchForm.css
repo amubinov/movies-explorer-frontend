@@ -64,6 +64,10 @@
   opacity: 0.7;
 }
 
+.search__button_disabled {
+  opacity: 0.2;
+}
+
 .search__checkbox-wrapper {
   display: flex;
   align-items: center;
@@ -100,6 +104,17 @@
 
 .search__checkbox-default:checked + .search__checkbox-custom {
   background-image: url("../../../images/smalltumb.svg");
+}
+
+.search__error-title {
+  margin: 0;
+  padding-bottom: 25px;
+  padding-top: 25px;
+  /* color: #ff3055; */
+  color: #3456f3;
+  display: flex;
+  font-size: 22px;
+  justify-content: center;
 }
 
 @media (max-width: 986px) {
