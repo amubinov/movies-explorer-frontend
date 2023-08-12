@@ -32,32 +32,33 @@ class MoviesApi {
   }
 
   // Добавление фильма в сохраненные
-  saveMovie = (movie) => {
+  saveMovie(movieData) {
     return fetch(`${baseUrl2}/movies`, {
       method: "POST",
       credentials: 'include',
       headers: {
-        "Accept": "application/json",
+        // "Accept": "application/json",
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(movie)
+      body: JSON.stringify(movieData)
     })
-      .then((result) => this._handlingResponse(result));
+      .then((result) => this._checkResponse(result));
   }
 
-  deleteMovie = (_id) => {
-    return fetch(`${baseUrl2}/movies/${_id}`, {
+  deleteMovie(movieData) {
+    return fetch(`${baseUrl2}/movies/${movieData}`, {
       method: "DELETE",
       credentials: 'include',
       headers: {
         // "Origin": "https://amubinov.nomoredomains.xyz",
-        "Accept": "application/json",
+        // "Accept": "application/json",
         "Content-Type": "application/json",
       },
     })
-      .then((res) => this._checkResponse(res));
+      .then((result) => this._checkResponse(result));
   }
 }
+
 const moviesApi = new MoviesApi({
   // baseUrl: 'https://api.nomoreparties.co/beatfilm-movies',
   headers: {

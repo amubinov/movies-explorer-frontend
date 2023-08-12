@@ -39,7 +39,6 @@ function App() {
   }, [isLogged]);
 
 
-  // Получение сохраненных фильмов
   useEffect(() => {
     if (isLogged) {
       moviesApi.getSavedMovies()
@@ -47,7 +46,6 @@ function App() {
         .catch(error => console.log(error));
     }
   }, [isLogged]);
-
 
   useEffect(() => {
     checkToken();
@@ -160,10 +158,8 @@ function App() {
     }
     const savedMovie = {
       ...movie,
-      image: movie.image ? `https://api.nomoreparties.co${movie.image.url}` : '',
-      thumbnail: movie.image && movie.image.formats.thumbnail
-        ? `https://api.nomoreparties.co${movie.image.formats.thumbnail.url}`
-        : '',
+      image: `https://api.nomoreparties.co${movie.image.url}`,
+      thumbnail: `https://api.nomoreparties.co${movie.image.formats.thumbnail.url}`,
     };
     savedMovie.movieId = savedMovie.id;
     delete savedMovie.created_at;
@@ -179,42 +175,10 @@ function App() {
   };
 
 
-
   if (loading) {
     return <Preloader />;
   }
 
-  const updateSavedMovies = (movieId, movie) => {
-    if (movieId) {
-      const updatedMovies = currentMovies.filter(item => item.movieId !== movieId);
-      setCurrentMovies(updatedMovies);
-    } else {
-      setCurrentMovies([...currentMovies, movie]);
-    }
-  };
-
-
-  const handleMovieButtonClick = (movie, action, movieId) => {
-
-    if (action === 'save') {
-      moviesApi.saveMovie({
-
-      })
-        .then((savedMovie) => {
-          updateSavedMovies(savedMovie._id, savedMovie); // Передаем savedMovie
-        })
-        .catch((error) => {
-        });
-    } else if (action === 'delete') {
-      moviesApi.deleteMovie(movieId)
-        .then(() => {
-          updateSavedMovies(movieId); // Вызов функции обновления
-        })
-        .catch((error) => {
-
-        });
-    }
-  };
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <CurrentSavedMoviesContext.Provider value={currentMovies}>
@@ -232,8 +196,8 @@ function App() {
                   <Movies
                     isLogged={isLogged}
                     onClickSaveMovie={onClickSaveMovie}
-                    updateSavedMovies={updateSavedMovies}
-                    handleMovieButtonClick={handleMovieButtonClick}
+                  // onCardDelete={onClickDeleteMovie}
+                  // onCardLike={onClickSaveMovie}
                   />
                 </ProtectedRoutes>
               }

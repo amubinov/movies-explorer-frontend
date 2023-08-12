@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard';
@@ -16,7 +17,7 @@ import {
 
 } from '../../../utils/config';
 
-function MoviesCardList({ movies, mode, onClickMovieBtn, updateSavedMovies }) {
+function MoviesCardList({ movies, mode, onClickMovie }) {
 
   const [isTotalCards, setIsTotalCards] = useState(0);
   const [isAddMovies, setIsAddMovies] = useState(0);
@@ -69,25 +70,6 @@ function MoviesCardList({ movies, mode, onClickMovieBtn, updateSavedMovies }) {
   }, []);
 
 
-
-  const handleMovieButtonClick = (movie, action, movieId) => {
-    if (action === 'save') {
-      moviesApi.saveMovie({
-      })
-        .then((savedMovie) => {
-          updateSavedMovies(savedMovie._id); // Вызов функции обновления
-        })
-        .catch((error) => {
-        });
-    } else if (action === 'delete') {
-      moviesApi.deleteMovie(movieId)
-        .then(() => {
-          updateSavedMovies(movieId); // Вызов функции обновления
-        })
-        .catch((error) => {
-        });
-    }
-  };
   return (
     <>
       <section className='movies-card-list'>
@@ -102,7 +84,8 @@ function MoviesCardList({ movies, mode, onClickMovieBtn, updateSavedMovies }) {
                     movie={movie}
                     key={movie.id}
                     mode='all'
-                    onClickMovieBtn={onClickMovieBtn}
+                    // onClickSaveMovie={onClickSaveMovie}
+                    onClickMovie={onClickMovie}
                   // updateSavedMovies={updateSavedMovies}
                   // handleMovieButtonClick={handleMovieButtonClick}
                   />
@@ -115,8 +98,9 @@ function MoviesCardList({ movies, mode, onClickMovieBtn, updateSavedMovies }) {
                   <MoviesCard
                     movie={movie}
                     key={movie._id}
-                    onClickMovieBtn={onClickMovieBtn}
-                    updateSavedMovies={updateSavedMovies}
+                    // onClickSaveMovie={onClickSaveMovie}
+                    onClickMovie={onClickMovie}
+                  // updateSavedMovies={updateSavedMovies}
                   // handleMovieButtonClick={handleMovieButtonClick}
                   />
                 );

@@ -8,12 +8,11 @@ class MainApi {
     res.ok ? res.json() : Promise.reject(`Error: ${res.statusText}`);
 
   register = (items) => {
-    //  ({ email, password, name })
     return fetch(`${this._baseUrl}/signup`, {
       method: "POST",
       credentials: 'include',
       headers: {
-        "Accept": "application/json",
+        // "Accept": "application/json",
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
@@ -32,7 +31,7 @@ class MainApi {
       credentials: 'include',
       headers: {
         // "Origin": "https://amubinov.nomoredomains.xyz",
-        "Accept": "application/json",
+        // "Accept": "application/json",
         "Content-Type": "application/json"
       },
       body: JSON.stringify({

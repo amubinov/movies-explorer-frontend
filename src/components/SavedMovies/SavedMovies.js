@@ -7,6 +7,7 @@ import MoviesCardList from '../Movies/MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
 import './SavedMovies.css';
 import Popup from "../Popup/Popup";
+import moviesApi from '../../utils/MoviesApi';
 
 import { searchSavedMovie } from '../../utils/searchMovie';
 
@@ -17,6 +18,20 @@ function SavedMovies({ onClickDeleteMovie, isLogged }) {
   const savedMovies = useContext(CurrentSavedMoviesContext);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [popupMessage, setPopupMessage] = useState("");
+
+  const [movies, setMovies] = useState([]);
+
+  const handleCardDelete = (_id) => {
+    moviesApi.deleteMovie(_id)
+      .then((res) => {
+
+        setMovies(savedMovies.filter((movie) => movie._id !== _id));
+
+      })
+      .catch((error) => {
+        console.log(`Ошибка: ${error}`);
+      });
+  }
 
   function renderMovies() {
     setIsPreloader(true);
@@ -68,7 +83,7 @@ function SavedMovies({ onClickDeleteMovie, isLogged }) {
             <MoviesCardList
               movies={isFiltered}
               mode={'save'}
-              onClickMovieBtn={onClickDeleteMovie}
+              onClickMovie={handleCardDelete}
             /> :
             isPopupOpen && <Popup
               isOpen={isPopupOpen}

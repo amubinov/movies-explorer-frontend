@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import Header from '../Header/Header';
 import SearchForm from './SearchForm/SearchForm';
@@ -7,7 +8,6 @@ import { searchMovie } from '../../utils/searchMovie';
 import moviesApi from '../../utils/MoviesApi';
 import Footer from '../Footer/Footer';
 import Popup from "../Popup/Popup";
-
 
 
 function Movies({ onClickSaveMovie, isLogged }) {
@@ -66,30 +66,20 @@ function Movies({ onClickSaveMovie, isLogged }) {
     setIsPopupOpen(!isPopupOpen);
   }
 
-
-  async function savedMoviesToggle(movie, isSelected) {
-    if (isSelected) {
-      try {
-        await moviesApi.saveMovie(movie);
-        let newSavedMovies = await moviesApi.getSavedMovies();
-        setSavedMovies(newSavedMovies);
-        localStorage.setItem('savedMovies', JSON.stringify(newSavedMovies));
-      } catch (err) {
-        console.log(`При добавлении фильма что-то пошло не так. Ошибка: ${err}`);
-      }
-    } else {
-      try {
-        await moviesApi.deleteMovie(movie._id);
-        let newSavedMovies = await moviesApi.getSavedMovies();
-        setSavedMovies(newSavedMovies);
-        localStorage.setItem('savedMovies', JSON.stringify(newSavedMovies));
-      } catch (err) {
-        console.log(`При удалении фильма что-то пошло не так. Ошибка: ${err}`);
-      }
-    }
-  }
+  const handleCardDelete = (_id) => {
+    moviesApi.deleteMovie(_id)
+      .then(() => {
 
 
+        // Remove the movie from the savedMovies state
+        // setSavedMovies(savedMovies.filter((movie) => movie._id !== _id));
+      })
+      .catch((error) => {
+
+
+        console.log(`Ошибка: ${error}`);
+      });
+  };
   return (
     <>
       <Header isLogged={isLogged} />
@@ -105,10 +95,8 @@ function Movies({ onClickSaveMovie, isLogged }) {
             <MoviesCardList
               movies={isFiltered}
               mode={'all'}
-              onClickMovieBtn={onClickSaveMovie}
-              savedMoviesToggle={savedMoviesToggle}
-              savedMovies={savedMovies}
-              updateSavedMovies={onClickSaveMovie}
+              onClickMovie={onClickSaveMovie}
+              onCardDelete={handleCardDelete}
             /> :
             isPopupOpen && <Popup
               isOpen={isPopupOpen}
