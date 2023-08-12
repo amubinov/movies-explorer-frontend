@@ -208,6 +208,8 @@
   }
 
   .movie-menu__account {
-    margin-top: 445px;
+    /* margin-top: 445px; */
+    margin-top: 0;
+    margin-bottom: 85%;
   }
 }
