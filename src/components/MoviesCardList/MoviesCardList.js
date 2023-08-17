@@ -1,9 +1,9 @@
 
 import React, { useState, useEffect } from 'react';
 import './MoviesCardList.css';
-import MoviesCard from '../MoviesCard/MoviesCard';
-import More from '../More/More';
-import moviesApi from '../../../utils/MoviesApi';
+import MoviesCard from './MoviesCard/MoviesCard';
+import More from './More/More';
+// import moviesApi from '../../../utils/MoviesApi';
 import {
   windowWidth_1280,
   windowWidth_984,
@@ -15,9 +15,12 @@ import {
   AddMovies_600,
   AddMovies_320,
 
-} from '../../../utils/config';
+} from '../../utils/config';
+
 
 function MoviesCardList({ movies, mode, onClickMovie }) {
+
+  const [likedMovies, setLikedMovies] = useState({});
 
   const [isTotalCards, setIsTotalCards] = useState(0);
   const [isAddMovies, setIsAddMovies] = useState(0);
@@ -69,7 +72,7 @@ function MoviesCardList({ movies, mode, onClickMovie }) {
     return () => window.removeEventListener('resize', window.fn);
   }, []);
 
-
+  console.log("movies in MoviesCardList:", movies);
   return (
     <>
       <section className='movies-card-list'>
@@ -86,6 +89,7 @@ function MoviesCardList({ movies, mode, onClickMovie }) {
                     mode='all'
                     // onClickSaveMovie={onClickSaveMovie}
                     onClickMovie={onClickMovie}
+                    isLiked={likedMovies[movie.id]}
                   // updateSavedMovies={updateSavedMovies}
                   // handleMovieButtonClick={handleMovieButtonClick}
                   />
@@ -93,11 +97,11 @@ function MoviesCardList({ movies, mode, onClickMovie }) {
               })
             ) : (
               // Иначе, отображаем фильмы без среза
-              movies.map((movie) => {
+              movies.map((item) => {
                 return (
                   <MoviesCard
-                    movie={movie}
-                    key={movie._id}
+                    movie={item}
+                    key={item._id}
                     // onClickSaveMovie={onClickSaveMovie}
                     onClickMovie={onClickMovie}
                   // updateSavedMovies={updateSavedMovies}

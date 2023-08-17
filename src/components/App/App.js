@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import moviesApi from '../../utils/MoviesApi';
@@ -6,7 +6,7 @@ import Main from '../Main/Main';
 import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies'
 import Profile from '../Profile/Profile';
-import Preloader from '../Movies/Preloader/Preloader';
+import Preloader from '../Preloader/Preloader';
 import Login from '../Login/Login';
 import Register from '../Register/Register';
 import PageNotFound from '../PageNotFound/PageNotFound'
@@ -27,7 +27,9 @@ function App() {
   const [popupMessage, setPopupMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [currentMovies, setCurrentMovies] = useState([]);
+  const [isRender, setIsRender] = useState(false);
   const navigate = useNavigate();
+  const [savedMovies, setSavedMovies] = useState(null);
 
 
   useEffect(() => {
@@ -42,7 +44,10 @@ function App() {
   useEffect(() => {
     if (isLogged) {
       moviesApi.getSavedMovies()
-        .then((savedMovies) => setCurrentMovies(savedMovies))
+        .then((savedMovies) => {
+          setSavedMovies(savedMovies);
+          setCurrentMovies(savedMovies)
+        })
         .catch(error => console.log(error));
     }
   }, [isLogged]);
@@ -77,7 +82,7 @@ function App() {
       .catch(err => {
         if (err) {
           setIsPopupOpen(true);
-          setPopupMessage("Неправильный e-mail или пароль");
+          setPopupMessage("ERROR! The Truth Is Out There");
         }
       })
   };
@@ -126,7 +131,7 @@ function App() {
         localStorage.clear();
         setIsLogged(false);
         setCurrentUser({});
-        setCurrentMovies([]);
+        // setCurrentMovies([]);
         setIsPopupOpen(true);
         setPopupMessage("Вы вышли из аккаунта!");
         navigate("/", { replace: true });
@@ -143,13 +148,18 @@ function App() {
   }
 
   function onClickDeleteMovie(id) {
+    console.log("Deleting movie with id:", id);
     moviesApi.deleteMovie(id)
       .then((result) => {
-        if (result._id) setCurrentMovies((prev) => prev.filter((item) => item._id !== id));
+        console.log("Movie deleted successfully:", result);
+
+        if (result._id) {
+          setCurrentMovies((prev) => prev.filter((item) => item._id !== id));
+          console.log("Updated movie list:", currentMovies);
+        }
       })
       .catch(err => console.log(err))
-  };
-
+  }
 
   function onClickSaveMovie(movie, action, id) {
     if (action === 'delete') {
@@ -192,7 +202,9 @@ function App() {
             <Route
               path="/movies"
               element={
-                <ProtectedRoutes isLogged={isLogged}>
+                <ProtectedRoutes
+                // isLogged={isLogged}
+                >
                   <Movies
                     isLogged={isLogged}
                     onClickSaveMovie={onClickSaveMovie}
@@ -205,7 +217,9 @@ function App() {
             <Route
               path="/saved-movies"
               element={
-                <ProtectedRoutes isLogged={isLogged}>
+                <ProtectedRoutes
+                // isLogged={isLogged}
+                >
                   <SavedMovies
                     isLogged={isLogged}
                     onClickDeleteMovie={onClickDeleteMovie}
@@ -216,7 +230,9 @@ function App() {
             <Route
               path="/profile"
               element={
-                <ProtectedRoutes isLogged={isLogged}>
+                <ProtectedRoutes
+                // isLogged={isLogged}
+                >
                   <Profile
                     isLoading={isLoading}
                     isLogged={isLogged}

@@ -75,7 +75,9 @@ function SearchForm({ onSubmitSearchMovies, onClickShortMovie, mode }) {
           <span className="search__checkbox-label">Короткометражки</span>
         </div>
       </form>
-      {!isValid && <p className="search__error-title">Нужно ввести ключевое слово</p>}
+      {isValue.length === 0 && !isValid && (
+        <p className="search__error-title">Нужно ввести ключевое слово</p>
+      )}
     </section>
   );
 };

@@ -1,14 +1,14 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Header from '../Header/Header';
-import SearchForm from './SearchForm/SearchForm';
-import Preloader from './Preloader/Preloader';
-import MoviesCardList from './MoviesCardList/MoviesCardList';
+import SearchForm from '../SearchForm/SearchForm';
+import Preloader from '../Preloader/Preloader';
+import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import { searchMovie } from '../../utils/searchMovie';
 import moviesApi from '../../utils/MoviesApi';
 import Footer from '../Footer/Footer';
 import Popup from "../Popup/Popup";
-
+// import { CurrentSavedMoviesContext } from '../../contexts/CurrentSavedMoviesContext';
 
 function Movies({ onClickSaveMovie, isLogged }) {
 
@@ -17,7 +17,7 @@ function Movies({ onClickSaveMovie, isLogged }) {
   const [isRender, setIsRender] = useState(false);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [popupMessage, setPopupMessage] = useState("");
-  const [savedMovies, setSavedMovies] = useState([]);
+  // const [savedMovies, setSavedMovies] = useState([]);
 
   function renderMovies() {
     setIsPreloader(false);
@@ -66,20 +66,20 @@ function Movies({ onClickSaveMovie, isLogged }) {
     setIsPopupOpen(!isPopupOpen);
   }
 
-  const handleCardDelete = (_id) => {
-    moviesApi.deleteMovie(_id)
-      .then(() => {
+  // const handleCardDelete = (_id) => {
+  //   moviesApi.deleteMovie(_id)
+  //     .then(() => {
 
 
-        // Remove the movie from the savedMovies state
-        // setSavedMovies(savedMovies.filter((movie) => movie._id !== _id));
-      })
-      .catch((error) => {
+  //       // Remove the movie from the savedMovies state
+  //       // setSavedMovies(savedMovies.filter((movie) => movie._id !== _id));
+  //     })
+  //     .catch((error) => {
 
 
-        console.log(`Ошибка: ${error}`);
-      });
-  };
+  //       console.log(`Ошибка: ${error}`);
+  //     });
+  // };
   return (
     <>
       <Header isLogged={isLogged} />
@@ -96,7 +96,7 @@ function Movies({ onClickSaveMovie, isLogged }) {
               movies={isFiltered}
               mode={'all'}
               onClickMovie={onClickSaveMovie}
-              onCardDelete={handleCardDelete}
+            // onCardDelete={handleCardDelete}
             /> :
             isPopupOpen && <Popup
               isOpen={isPopupOpen}

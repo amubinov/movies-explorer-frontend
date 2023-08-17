@@ -48,7 +48,7 @@
 
 .search__button {
   padding: 0;
-  background-image: url("../../../images/find.svg");
+  background-image: url("../../images/find.svg");
   background-color: transparent;
   background-repeat: no-repeat;
   background-position: center center;
@@ -98,12 +98,12 @@
   display: inline-block;
   width: 36px;
   height: 20px;
-  background-image: url("../../../images/smalltumboff.svg");
+  background-image: url("../../images/smalltumboff.svg");
   cursor: pointer;
 }
 
 .search__checkbox-default:checked + .search__checkbox-custom {
-  background-image: url("../../../images/smalltumb.svg");
+  background-image: url("../../images/smalltumb.svg");
 }
 
 .search__error-title {

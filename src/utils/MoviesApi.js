@@ -31,6 +31,7 @@ class MoviesApi {
       .then((res) => this._checkResponse(res));
   }
 
+
   // Добавление фильма в сохраненные
   saveMovie(movieData) {
     return fetch(`${baseUrl2}/movies`, {

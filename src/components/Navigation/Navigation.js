@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import './Navigation.css';
-import MovieMenu from '../Movies/MovieMenu/MovieMenu';
+import MovieMenu from './MovieMenu/MovieMenu';
 
 function Navigation({ isLogged }) {
   const navigate = useNavigate();

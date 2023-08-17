@@ -9,19 +9,23 @@ export const searchMovie = () => {
   if (shortFilmsTumbler === 'true') return filtered.filter((movie) => movie.duration < shortFilms);
   else return filtered;
 };
-
-export const searchSavedMovie = (movie) => {
-  if (!movie || !Array.isArray(movie)) {
-    return []; // Возвращаем пустой массив, если movie не определена или не является массивом
+export const searchSavedMovie = (movies) => {
+  console.log("Searching saved movies:", movies);
+  if (!movies || !Array.isArray(movies)) {
+    return []; // Возвращаем пустой массив, если movies не определена или не является массивом
   }
 
   const shortSavedMoviesTumbler = localStorage.getItem('shortSavedMoviesTumbler');
   const savedMovieSearchText = localStorage.getItem('savedMovieSearchText').toLowerCase();
 
-  const filtered = movie.filter((movie) => movie.nameRU.toLowerCase().indexOf(savedMovieSearchText) >= 0);
+  let filtered = movies.filter((movie) => movie.nameRU.toLowerCase().indexOf(savedMovieSearchText) >= 0);
   if (shortSavedMoviesTumbler === 'true') {
-    return filtered.filter((movie) => movie.duration < shortFilms);
-  } else {
-    return filtered;
+    filtered = filtered.filter((movie) => movie.duration < shortFilms);
   }
+
+  if (filtered.length === 0) {
+    return movies; // Возвращаем весь список фильмов, если фильтр не дал результатов
+  }
+  console.log("Filtered movies:", filtered);
+  return filtered;
 };
