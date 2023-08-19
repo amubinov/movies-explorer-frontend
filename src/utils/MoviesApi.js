@@ -46,8 +46,8 @@ class MoviesApi {
       .then((result) => this._checkResponse(result));
   }
 
-  deleteMovie(movieData) {
-    return fetch(`${baseUrl2}/movies/${movieData}`, {
+  deleteMovie(movieId) {
+    return fetch(`${baseUrl2}/movies/${movieId}`, {
       method: "DELETE",
       credentials: 'include',
       headers: {

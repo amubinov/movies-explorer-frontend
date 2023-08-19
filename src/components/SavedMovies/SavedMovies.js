@@ -7,11 +7,10 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
 import './SavedMovies.css';
 import Popup from "../Popup/Popup";
-import moviesApi from '../../utils/MoviesApi';
 
 import { searchSavedMovie } from '../../utils/searchMovie';
 
-function SavedMovies({ isLogged }) {
+function SavedMovies({ isLogged, onClickDeleteMovie }) {
   const [isPreloader, setIsPreloader] = useState(false);
   const [isRender, setIsRender] = useState(false);
   const [isFiltered, setIsFiltered] = useState([]);
@@ -60,17 +59,6 @@ function SavedMovies({ isLogged }) {
     renderMovies();
   }, [savedMovies]);
 
-  // console.log("isFiltered:", isFiltered);
-
-  const handleCardDelete = (_id) => {
-    moviesApi.deleteMovie(_id).then((result) => {
-      if (result.message === 'Фильм удален') {
-        setIsFiltered(prevFiltered => prevFiltered.filter((movie) => movie._id !== _id));
-      }
-    }).catch((error) => {
-      console.log(`Ошибка при удалении фильма с _id ${_id}`, error);
-    });
-  }
 
   const closePopup = () => {
     setIsPopupOpen(!isPopupOpen);
@@ -92,7 +80,7 @@ function SavedMovies({ isLogged }) {
               <MoviesCardList
                 movies={isFiltered}
                 mode={'save'}
-                onClickMovie={handleCardDelete}
+                onClickMovie={onClickDeleteMovie}
               /> :
               isPopupOpen && <Popup
                 isOpen={isPopupOpen}

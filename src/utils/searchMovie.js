@@ -10,7 +10,7 @@ export const searchMovie = () => {
   else return filtered;
 };
 export const searchSavedMovie = (movies) => {
-  console.log("Searching saved movies:", movies);
+  // console.log("Searching saved movies:", movies);
   if (!movies || !Array.isArray(movies)) {
     return []; // Возвращаем пустой массив, если movies не определена или не является массивом
   }

@@ -18,7 +18,9 @@ import {
 } from '../../utils/config';
 
 
-function MoviesCardList({ movies, mode, onClickMovie }) {
+function MoviesCardList({ movies, mode, onClickMovie, onClickDeleteMovie }) {
+  console.log("Movies in MoviesCardList:", movies);
+
 
   const [likedMovies, setLikedMovies] = useState({});
 
@@ -72,7 +74,7 @@ function MoviesCardList({ movies, mode, onClickMovie }) {
     return () => window.removeEventListener('resize', window.fn);
   }, []);
 
-  console.log("movies in MoviesCardList:", movies);
+  // console.log("movies in MoviesCardList:", movies);
   return (
     <>
       <section className='movies-card-list'>

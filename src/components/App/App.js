@@ -15,6 +15,7 @@ import { ProtectedRoutes } from '../ProtectedRoute/ProtectedRoutes';
 import mainApi from "../../utils/MainApi";
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { CurrentSavedMoviesContext } from '../../contexts/CurrentSavedMoviesContext';
+// import { useCurrentSavedMovies } from '../../contexts/CurrentSavedMoviesContext';
 import { useNavigate } from 'react-router-dom';
 import "./App.css";
 
@@ -153,10 +154,11 @@ function App() {
       .then((result) => {
         console.log("Movie deleted successfully:", result);
 
-        if (result._id) {
-          setCurrentMovies((prev) => prev.filter((item) => item._id !== id));
-          console.log("Updated movie list:", currentMovies);
-        }
+        // if (result._id) {
+
+        setCurrentMovies((prev) => prev.filter((item) => item._id !== id));
+        console.log("Updated movie list:", currentMovies);
+        // }
       })
       .catch(err => console.log(err))
   }
