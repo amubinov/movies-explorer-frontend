@@ -15,7 +15,6 @@ import { ProtectedRoutes } from '../ProtectedRoute/ProtectedRoutes';
 import mainApi from "../../utils/MainApi";
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { CurrentSavedMoviesContext } from '../../contexts/CurrentSavedMoviesContext';
-// import { useCurrentSavedMovies } from '../../contexts/CurrentSavedMoviesContext';
 import { useNavigate } from 'react-router-dom';
 import "./App.css";
 
@@ -28,9 +27,7 @@ function App() {
   const [popupMessage, setPopupMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [currentMovies, setCurrentMovies] = useState([]);
-  const [isRender, setIsRender] = useState(false);
   const navigate = useNavigate();
-  const [savedMovies, setSavedMovies] = useState(null);
 
 
   useEffect(() => {
@@ -46,7 +43,6 @@ function App() {
     if (isLogged) {
       moviesApi.getSavedMovies()
         .then((savedMovies) => {
-          setSavedMovies(savedMovies);
           setCurrentMovies(savedMovies)
         })
         .catch(error => console.log(error));
@@ -115,7 +111,6 @@ function App() {
         setCurrentUser(data);
         setIsPopupOpen(true);
         setPopupMessage("Вы обновили профиль!")
-
       })
       .catch((err) => {
         if (err) {
@@ -126,23 +121,46 @@ function App() {
   };
 
 
+  // const logOut = () => {
+  //   mainApi.logOut()
+  //     .then(() => {
+  //       localStorage.clear();
+  //       setIsLogged(false);
+  //       setCurrentUser({});
+  //       setCurrentMovies([]);
+  //       setIsPopupOpen(true);
+  //       setPopupMessage("Вы вышли из аккаунта!");
+  //       navigate("/", { replace: true });
+  //     })
+  //     .catch(() => {
+  //       setIsPopupOpen(true);
+  //       setPopupMessage("На сервере произошла ошибка!")
+  //     });
+  // }
+
   const logOut = () => {
+    console.log("Начало процесса разлогинации...");
+
     mainApi.logOut()
       .then(() => {
+        console.log("Токен успешно удален на сервере.");
         localStorage.clear();
+        console.log("Локальное хранилище очищено.");
         setIsLogged(false);
         setCurrentUser({});
-        // setCurrentMovies([]);
+        setCurrentMovies([]);
+        console.log("Состояния сброшены.");
         setIsPopupOpen(true);
         setPopupMessage("Вы вышли из аккаунта!");
         navigate("/", { replace: true });
+        console.log("Пользователь перенаправлен на главную страницу.");
       })
-      .catch(() => {
+      .catch((error) => {
+        console.log("Произошла ошибка при разлогине:", error);
         setIsPopupOpen(true);
-        setPopupMessage("На сервере произошла ошибка!")
+        setPopupMessage("На сервере произошла ошибка!");
       });
-  }
-
+  };
 
   const closePopup = () => {
     setIsPopupOpen(!isPopupOpen);
@@ -153,9 +171,7 @@ function App() {
     moviesApi.deleteMovie(id)
       .then((result) => {
         console.log("Movie deleted successfully:", result);
-
         // if (result._id) {
-
         setCurrentMovies((prev) => prev.filter((item) => item._id !== id));
         console.log("Updated movie list:", currentMovies);
         // }
@@ -201,6 +217,7 @@ function App() {
               path="/"
               element={<Main isLogged={!isLogged} />}
             />
+
             <Route
               path="/movies"
               element={
@@ -210,8 +227,7 @@ function App() {
                   <Movies
                     isLogged={isLogged}
                     onClickSaveMovie={onClickSaveMovie}
-                  // onCardDelete={onClickDeleteMovie}
-                  // onCardLike={onClickSaveMovie}
+
                   />
                 </ProtectedRoutes>
               }
