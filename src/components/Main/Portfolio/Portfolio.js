@@ -9,7 +9,7 @@ function Portfolio() {
           <a
             className='portfolio__link'
             target='_blank'
-            href='https://github.com/amubinov/how-to-learn.git'
+            href='https://github.com/amubinov/how-to-learn'
             rel="noreferrer"
           >
             <p className='portfolio__link-title'>Статичный сайт</p>

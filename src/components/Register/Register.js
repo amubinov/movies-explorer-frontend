@@ -1,24 +1,33 @@
+import { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { useFormValidation } from '../../utils/useFormValidation';
 import '../Form/Form.css';
 
 
-function Register({ onRegister }) {
+function Register({ isLogged, handleRegister }) {
 
-  const { values, errors, handleChange } = useFormValidation();
+  const { values, errors, reset, handleChange } = useFormValidation();
   const errorClassName = (name) => `form__error ${errors[name] ? 'form__error_visible' : ''}`
+  const [isFormValid, setIsFormValid] = useState(false);
 
   function handleSubmit(e) {
     e.preventDefault();
-    onRegister(values)
+    handleRegister(values)
   }
+
+  const handleFormValid = useCallback((event) => {
+    setIsFormValid(event.target.closest('form').checkValidity());
+  }, []);
+
+
+  useEffect(() => reset({}, {}, false), []);
 
 
   return (
     <section className="register form">
       <Link to="/" className="form__logo" alt="Логотип сайта"></Link>
       <h1 className="form__title">Добро пожаловать!</h1>
-      <form className="form__container" onSubmit={handleSubmit}>
+      <form className="form__container" onSubmit={handleSubmit} onChange={handleFormValid}>
         <fieldset className="form__wrapper">
           <label className="form__label">
             <p className="form__text-label">Имя</p>
@@ -68,13 +77,15 @@ function Register({ onRegister }) {
               onChange={handleChange}
               required={true}
             />
-            <span className={errorClassName('password')} id="passwordInput-error">{errors['password']}Что-то пошло не так...</span>
+            <span className={errorClassName('password')} id="passwordInput-error">{errors['password']}</span>
 
           </label>
         </fieldset>
 
         <button
-          className="form__button"
+          // className="form__button"
+          className={`form__button ${isFormValid ? '' : 'form__button_disabled'} `}
+          disabled={!isFormValid}
           type="submit">
           Зарегистрироваться
         </button>

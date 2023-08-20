@@ -127,6 +127,12 @@
   margin: 193px 0 15px;
 }
 
+.form__button_disabled {
+  background-color: transparent;
+  cursor: default;
+  pointer-events: none;
+}
+
 .form__text {
   width: 100%;
   margin: 0;

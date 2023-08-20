@@ -1,30 +1,35 @@
-import { useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useState, useEffect, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import { useFormValidation } from '../../utils/useFormValidation';
 import '../Form/Form.css';
 
 
-const Login = ({ onLogin, isLogged }) => {
-  const { values, errors, handleChange } = useFormValidation();
+const Login = ({ handleLogin, isLoading, isLogged }) => {
+  const { values, errors, reset, handleChange } = useFormValidation();
   const errorClassName = (name) => `form__error form__error-login ${errors[name] ? 'form__error_visible' : ''}`
-  const navigate = useNavigate();
+  const [isFormValid, setIsFormValid] = useState(false);
 
-  useEffect(() => {
-    if (isLogged) {
-      navigate('/movies', { replace: true });
-    }
-  }, [isLogged, navigate]);
+
+  useEffect(() => reset({}, {}, false), []);
 
   function handleSubmit(e) {
     e.preventDefault();
-    onLogin(values)
+    handleLogin(values)
   }
+
+  const handleFormValid = useCallback((event) => {
+    setIsFormValid(event.target.closest('form').checkValidity());
+  }, []);
+
+
+
 
   return (
     <section className="login form">
       <Link to="/" className="form__logo" alt="Логотип сайта"></Link>
       <h2 className="form__title">Рады видеть!</h2>
-      <form className="form__container" onSubmit={handleSubmit}>
+      <form className="form__container" onSubmit={handleSubmit}
+        onChange={handleFormValid} isloading={isLoading.toString()}>
         <fieldset className="form__wrapper form__wrapper-login">
           <label className="form__label">
             <p className="form__text-label">E-mail</p>
@@ -59,7 +64,9 @@ const Login = ({ onLogin, isLogged }) => {
             <span className={errorClassName('password')} id="passwordInput-error">{errors['password']}</span>
           </label>
         </fieldset>
-        <button className='form__button form__button-login'>Войти</button>
+        <button
+          className={`form__button form__button-login ${isFormValid ? '' : 'form__button_disabled'} `}
+          disabled={!isFormValid}>Войти</button>
       </form>
       <p className="form__text">Ещё не зарегистрированы?
         <Link to="/signup" className="form__link">Регистрация</Link>
